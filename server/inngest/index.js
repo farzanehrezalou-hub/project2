@@ -178,10 +178,15 @@ const syncWorkspaceMemberCreation = inngest.createFunction(
 )
 
 //inngest function to send email
-const sendTaskAssignmentEmail = inngest.createFunction(
-  {id: "send-task-assignment-email"},
-  {event: "app/task.assigned"},
-  async({evnet, step}) => {
+const sendTaskAssignmentEmail = inngest.createFunction({
+  id: "send-task-assignment-email",
+  triggers: {
+    event: "app/task.assigned"
+  }
+},
+
+ 
+  async({event, step}) => {
     const {taskId, origin} = event.data;
 
     const task = await prisma.task.findUnique({
