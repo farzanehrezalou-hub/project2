@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer.js';
+import nodemailer from 'nodemailer';
 
 
 // Create a transporter using SMTP
