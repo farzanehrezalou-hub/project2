@@ -41,6 +41,7 @@ const Layout = () => {
         </div>
     )
 
+
     if(user && workspaces.length === 0) {
         return (
             <div className='min-h-screen flex flex-col justify-center items-center'>

@@ -53,7 +53,7 @@ const workspaceSlice = createSlice({
             }
         },
         deleteWorkspace: (state, action) => {
-            state.workspaces = state.workspaces.filter((w) => w._id !== action.payload);
+            state.workspaces = state.workspaces.filter((w) => w.id !== action.payload);
         },
         addProject: (state, action) => {
             state.currentWorkspace.projects.push(action.payload);
@@ -125,7 +125,7 @@ const workspaceSlice = createSlice({
             state.loading = true
         });
         builder.addCase(fetchWorkspaces.fulfilled, (state, action)=>{
-            state.workspace = action.payload;
+            state.workspaces = action.payload;
             if(action.payload.length > 0){
                 const localStorageWorkspaceId = localStorage.getItem('currentWorkspaceId');
                 if(localStorageWorkspaceId){
