@@ -2,6 +2,7 @@ import { Inngest, step } from "inngest";
 import { PrismaClient } from "@prisma/client";
 import sendEmail from "../configs/nodemailer.js";
 
+
 const prisma = new PrismaClient();
 
 
@@ -97,6 +98,7 @@ const syncWorkspaceCreation = inngest.createFunction(
     },
   },
   async({ event }) => {
+    
     const {data} = event;
     await prisma.workspace.create({
       data: {

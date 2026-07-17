@@ -1,5 +1,10 @@
 import prisma from "../configs/prisma.js";
 
+console.log("PRISMA:", prisma);
+console.log("WORKSPACE MODEL:", prisma.workspace);
+
+
+
 
 //create project
 export const createProject = async (req, res) => {
