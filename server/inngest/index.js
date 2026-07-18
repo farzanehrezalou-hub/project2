@@ -1,9 +1,10 @@
+import prisma from "../configs/prisma.js";
 import { Inngest, step } from "inngest";
-import { PrismaClient } from "@prisma/client";
+//import { PrismaClient } from "@prisma/client";
 import sendEmail from "../configs/nodemailer.js";
 
 
-const prisma = new PrismaClient();
+//const prisma = new PrismaClient();
 
 
 // Create a client to send and receive events

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "@clerk/react";
 import toast from "react-hot-toast";
 import api from "../configs/api.js";
+import { fetchWorkspaces } from "../features/workspaceSlice.js";
 
 export default function ProjectSettings({ project }) {
 
