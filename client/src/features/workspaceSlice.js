@@ -3,24 +3,26 @@ import { assets, dummyWorkspaces } from "../assets/assets";
 import api from "../configs/api";
 
 export const fetchWorkspaces = createAsyncThunk('workspace/fetchWorkspace',
- async({getToken}) => {
-    try {
-        const {data} = await api.get('/api/workspace', { headers: { Authorization: `Bearer ${await getToken()}` } });    
-        return data.workspaces || []     
-    } catch (error) {
-        console.log(error?.response?.data?.message || error.message)
-        return []
-        
-    }
+    async ({ getToken }, { rejectWithValue }) => {
+        try {
+            const token = await getToken();
+            const { data } = await api.get('/api/workspace', { headers: { Authorization: `Bearer ${token}` } });
+            return data.workspaces || []
+        } catch (error) {
+            console.log(error?.response?.data?.message || error.message)
+            return rejectWithValue(error?.response?.data?.message || error.message);
 
-    
-})
- 
+        }
+
+
+    })
+
 
 const initialState = {
     workspaces: [],
     currentWorkspace: null,
     loading: false,
+    initialized: false,
 };
 
 const workspaceSlice = createSlice({
@@ -120,28 +122,25 @@ const workspaceSlice = createSlice({
         }
 
     },
-    extraReducers: (builder)=>{
-        builder.addCase(fetchWorkspaces.pending, (state)=>{
+    extraReducers: (builder) => {
+        builder.addCase(fetchWorkspaces.pending, (state) => {
             state.loading = true
         });
-        builder.addCase(fetchWorkspaces.fulfilled, (state, action)=>{
+        builder.addCase(fetchWorkspaces.fulfilled, (state, action) => {
             state.workspaces = action.payload;
-            if(action.payload.length > 0){
+            if (action.payload.length > 0) {
                 const localStorageWorkspaceId = localStorage.getItem('currentWorkspaceId');
-                if(localStorageWorkspaceId){
-                    const findWorkspace = action.payload.find((w)=> w.id === localStorageWorkspaceId);
-                    if(findWorkspace){
-                        state.currentWorkspace = findWorkspace;
-                    }else{
-                        state.currentWorkspace = action.payload[0]
-                    }
-                }else{
+                if (localStorageWorkspaceId) {
+                    const findWorkspace = action.payload.find((w) => w.id === localStorageWorkspaceId);
+                    state.currentWorkspace = findWorkspace || action.payload[0];
+                } else {
                     state.currentWorkspace = action.payload[0]
                 }
             }
             state.loading = false;
+            state.initialized = true;
         });
-        builder.addCase(fetchWorkspaces.rejected, (state)=>{
+        builder.addCase(fetchWorkspaces.rejected, (state) => {
             state.loading = false
         });
     }
