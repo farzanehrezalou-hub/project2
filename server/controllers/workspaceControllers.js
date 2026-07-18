@@ -1,8 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+
+import prisma from "../configs/prisma.js";
+//import { PrismaClient } from "@prisma/client";
 
 
 
-const prisma = new PrismaClient();
+//const prisma = new PrismaClient();
 
 // Get all workspace for user
 export const getUserWorkspaces = async(req, res) => {

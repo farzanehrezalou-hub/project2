@@ -22,6 +22,7 @@ export const createTask = async (req, res) => {
         }else if(assigneeId && !project.members.find(member => member.userId === assigneeId)){
             return res.status(400).json({ message: "Assignee is not a member of this project"});
         }
+        
 
         const task = await prisma.task.create({
             data: {
@@ -31,6 +32,7 @@ export const createTask = async (req, res) => {
                 priority,
                 assigneeId,
                 status,
+                type,
                 due_date: new Date(due_date)
             }
         })
