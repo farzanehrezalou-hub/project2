@@ -8,8 +8,6 @@ export default prisma;
 
 
 
-
-
 // import 'dotenv/config'
 // import { defineConfig, env } from 'prisma/config'
 
@@ -21,3 +19,6 @@ export default prisma;
 //     url: env('DIRECT_URL'),
 //   },
 // })
+
+
+
